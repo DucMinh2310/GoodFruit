@@ -1,0 +1,27 @@
+<%- include("../partials/header.ejs") -%>
+
+    <div class="container">
+        <header class="jumbotron">
+            <div class="container">
+                <h1 class="display-4">Title</h1>
+                <p class="lead">Subtitle</p>
+                <a class="btn btn-primary" href="/stalls/new">add a new stall</a>
+            </div>
+        </header>
+
+
+        <div class="card-columns">
+            <% allFruitStall.forEach(fruitStall => {%>
+                <div class="card">
+                    <img class="img-thumbnail card-img-top" src="<%= fruitStall.image %>" alt="<%= fruitStall.name %>" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title font-weight-bold">
+                            <%= fruitStall.name %>
+                        </h5>
+                        <a class="btn btn-primary w-75" href="/stalls/<%= fruitStall._id %>">More info</a>
+                    </div>
+                </div>
+                <%}); %>
+        </div>
+    </div>
+    <%- include("../partials/footer.ejs") -%>
