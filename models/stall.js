@@ -2,21 +2,20 @@ const mongoose = require("mongoose");
 
 // Schema setup
 const stallSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String,
-  author: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+    name: String,
+    image: String,
+    price: Number,
+    description: String,
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
     },
-    username: String
-  },
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment"
-    }
-  ]
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }]
 });
 module.exports = mongoose.model("Stall", stallSchema);

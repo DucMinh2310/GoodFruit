@@ -12,9 +12,10 @@
             </div>
             <div class="col-md-9">
                 <div class="card">
-                    <img class="card-img-top rounded-top" src="<%= fruitStall.image %>" alt="<%= fruitStall.name %>">
+                    <img class="card-img-top rounded-top" src="<%= fruitStall.image %>" alt="<%= fruitStall.name %>" />
                     <div class="card-body">
-                        <h5 class="float-right font-italic"><strong>$9.00/night</strong></h5>
+                        <h5 class="float-right font-italic"><strong><%= Intl.NumberFormat().format(fruitStall.price) %>
+                            Vnd/Kg</strong></h5>
                         <h4>
                             <a href="#">
                                 <%= fruitStall.name %>
@@ -24,27 +25,36 @@
                             <%= fruitStall.description %>
                         </p>
                         <h5 class="d-inline">
-                            <i>Submitted by
-                                <%= fruitStall.author.username %>
-                            </i>
+                            <i>Submitted by <%= fruitStall.author.username %> </i>
                         </h5>
-                        <a href="/stalls/<%= fruitStall._id %>/edit" class="btn btn-warning btn-sm text-white">Edit</a>
-                        <form action="/stalls/<%= fruitStall._id %>/?_method=DELETE" method="POST" class="d-inline">
-                            <button class="btn btn-danger btn-sm text-white">Delete</button>
-                        </form>
+                        <% if(currentUser && fruitStall.author.id.equals(currentUser._id)){%>
+                            <a href="/stalls/<%= fruitStall._id %>/edit" class="btn btn-warning btn-sm text-white">Edit</a>
+                            <form action="/stalls/<%= fruitStall._id %>/?_method=DELETE" method="POST" class="d-inline">
+                                <button class="btn btn-danger btn-sm text-white">Delete</button>
+                            </form>
+                            <% } %>
                     </div>
                 </div>
                 <div class="card card-body bg-light my-3">
-                    <div><a class="btn btn-success float-right" href="/stalls/<%= fruitStall._id %>/comments/new">Add a new comment</a></div>
-                    <hr>
+                    <div>
+                        <a class="btn btn-success float-right" href="/stalls/<%= fruitStall._id %>/comments/new">Add a new
+                        comment</a>
+                    </div>
+                    <hr />
                     <% fruitStall.comments.forEach(cmt => {%>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 m-3">
                                 <strong><%= cmt.author.username %></strong>
                                 <span class="float-right font-italic"><%= moment(cmt.createdAt).fromNow() %></span>
                                 <p>
                                     <%= cmt.text %>
                                 </p>
+                                <% if(currentUser && cmt.author.id.equals(currentUser._id)){%>
+                                    <a href="/stalls/<%= fruitStall._id %>/comments/<%= cmt._id %>/edit" class="btn btn-warning btn-sm text-white">Edit</a>
+                                    <form action="/stalls/<%= fruitStall._id %>/comments/<%= cmt._id %>/?_method=DELETE" method="POST" class="d-inline">
+                                        <button class="btn btn-danger btn-sm text-white">Delete</button>
+                                    </form>
+                                    <% } %>
                             </div>
                         </div>
                         <%}); %>
@@ -52,22 +62,5 @@
             </div>
         </div>
     </div>
-
-
-    <!-- <div>
-        <h1>
-            <%= fruitStall.name %>
-        </h1>
-        <img class="w-25" src="<%= fruitStall.image %>" alt="<%= fruitStall.name %>">
-        <p>
-            <%= fruitStall.description %>
-        </p>
-        <p><a class="btn btn-success" href="/stalls/<%= fruitStall._id %>/comments/new">Add a new comment</a></p>
-        <% fruitStall.comments.forEach(cmt => {%>
-            <div><strong><%= cmt.author %></strong> -
-                <%= cmt.text %>
-            </div>
-            <%}); %>
-    </div> -->
 
     <%- include("../partials/footer.ejs") -%>

@@ -12,6 +12,9 @@
                     <input class="form-control" value="<%= stall.image %>" type="text" name="stall[image]">
                 </div>
                 <div class="form-group">
+                    <input class="form-control" type="number" value="<%= stall.price %>" name="stall[price]" min="10000" step="1000">
+                </div>
+                <div class="form-group">
                     <input class="form-control" value="<%= stall.description %>" type="text" name="stall[description]">
                 </div>
                 <button class="btn btn-primary btn-lg btn-block">Submit</button>
